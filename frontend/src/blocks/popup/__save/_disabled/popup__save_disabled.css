@@ -1,0 +1,8 @@
+.popup__save_disabled,
+.popup__save_disabled:hover{
+  background-color: white;
+  border: 1px solid #000;
+  color: #000;
+  opacity: 0.2;
+  filter: none;
+}

@@ -1,0 +1,26 @@
+.popup {
+  background-color: rgba(0, 0, 0, 0.5);
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s, opacity 0.2s linear;
+}
+
+@media screen and (max-width: 767px) {
+  .popup {
+    padding: 0 34px;
+  }
+}
+
+@media screen and (max-width: 425px) {
+  .popup {
+    padding: 0 19px;
+  }
+}
