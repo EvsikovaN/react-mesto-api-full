@@ -104,7 +104,6 @@ function App() {
   };
 
   const handleUpdateUser = (data) => {
-    console.log(data)
     api
       .setProfileInfo(data)
       .then((res) => {

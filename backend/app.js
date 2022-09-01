@@ -4,6 +4,7 @@ const cors = require('cors');
 const { errors } = require('celebrate');
 const { validateUserData, validateAuth } = require('./utils/validation');
 const { auth } = require('./middlewares/auth');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const { userRoutes } = require('./routes/userRoutes');
 const { cardRoutes } = require('./routes/cardRoutes');
@@ -19,6 +20,8 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
+
+app.use(requestLogger);
 
 app.post(
   '/signin',
@@ -36,6 +39,8 @@ app.use(auth);
 
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
+
+app.use(errorLogger); // подключаем логгер ошибок
 
 app.use(errors()); // обработчик ошибок celebrate
 
