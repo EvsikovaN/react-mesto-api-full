@@ -1,5 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors = require('cors');
 const { errors } = require('celebrate');
 const { validateUserData, validateAuth } = require('./utils/validation');
 const { auth } = require('./middlewares/auth');
@@ -11,11 +12,13 @@ const { createUser, login } = require('./controllers/userController');
 const { handleError } = require('./middlewares/handleError');
 const { NotFoundError } = require('./errors/not-found-err');
 
-const { PORT = 3000 } = process.env;
+const { PORT = 3001 } = process.env;
 
 const app = express();
 
 app.use(express.json());
+
+app.use(cors());
 
 app.post(
   '/signin',

@@ -19,17 +19,17 @@ function Header({ email, onSignOut }) {
           }
         ></Route>
         <Route
-          path="/sign-in"
+          path="/signin"
           element={
-            <Link to="/sign-up" className="header__btn">
+            <Link to="/signup" className="header__btn">
               Регистрация
             </Link>
           }
         ></Route>
         <Route
-          path="/sign-up"
+          path="/signup"
           element={
-            <Link to="/sign-in" className="header__btn">
+            <Link to="/signin" className="header__btn">
               Вход
             </Link>
           }

@@ -4,15 +4,15 @@ const { NotFoundError } = require('../errors/not-found-err');
 const { ForbiddenError } = require('../errors/forbidden-err');
 
 const getCards = (req, res, next) => {
-  Card.find({})
-    .then((cards) => res.send({ data: cards }))
+  Card.find({}).sort({ createdAt: -1 })
+    .then((cards) => res.send({ cards }))
     .catch(next);
 };
 
 const addCard = (req, res, next) => {
   const { name, link } = req.body;
   Card.create({ name, link, owner: req.user._id })
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.send({ card }))
     .catch((err) => errorMessage(err, req, res, next));
 };
 
@@ -40,7 +40,7 @@ const addLike = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Карточка не найдена');
     })
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.send({ card }))
     .catch((err) => errorMessage(err, req, res, next));
 };
 
@@ -53,7 +53,7 @@ const deleteLike = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Карточка не найдена');
     })
-    .then((card) => res.send({ data: card }))
+    .then((card) => res.send({ card }))
     .catch((err) => errorMessage(err, req, res, next));
 };
 

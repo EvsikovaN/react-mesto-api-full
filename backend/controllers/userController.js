@@ -16,7 +16,7 @@ const getUserById = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Нет пользователя с таким id');
     })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send({ user }))
     .catch((err) => errorMessage(err, req, res, next));
 };
 
@@ -52,7 +52,7 @@ const updateProfileInfo = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователь с таким id не найден');
     })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send({ user }))
     .catch((err) => errorMessage(err, req, res, next));
 };
 
@@ -66,7 +66,7 @@ const updateAvatar = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователь с таким id не найден');
     })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send({ user }))
     .catch((err) => errorMessage(err, req, res, next));
 };
 
@@ -95,7 +95,7 @@ const getUserInfo = (req, res, next) => {
     .orFail(() => {
       throw new NotFoundError('Пользователь не найден');
     })
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send({ user }))
     .catch((err) => errorMessage(err, req, res, next));
 };
 

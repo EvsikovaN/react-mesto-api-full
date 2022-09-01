@@ -30,18 +30,16 @@ function App() {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    Promise.all([api.getAllCards(), api.getProfileInfo()])
+    if(loggedIn) {
+      Promise.all([api.getAllCards(), api.getProfileInfo()])
       .then(([cards, userInfo]) => {
-        setCards(cards);
-        setCurrentUser(userInfo);
+        setCards(cards.cards);
+        setCurrentUser(userInfo.user);
+        navigate('/');
       })
       .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    if (loggedIn) {
-      navigate("/");
     }
+    
   }, [loggedIn]);
 
   useEffect(() => {
@@ -49,14 +47,14 @@ function App() {
   }, []);
 
   function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
 
     if (!isLiked) {
       api
         .setLike(card._id)
         .then((newCard) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
+            state.map((c) => (c._id === card._id ? newCard.card : c))
           );
         })
         .catch((err) => console.error(err));
@@ -65,7 +63,7 @@ function App() {
         .removeLike(card._id)
         .then((newCard) => {
           setCards((state) =>
-            state.map((c) => (c._id === card._id ? newCard : c))
+            state.map((c) => (c._id === card._id ? newCard.card : c))
           );
         })
         .catch((err) => console.error(err));
@@ -106,10 +104,11 @@ function App() {
   };
 
   const handleUpdateUser = (data) => {
+    console.log(data)
     api
       .setProfileInfo(data)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.user);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
@@ -119,7 +118,7 @@ function App() {
     api
       .setProfileAvatar(data.avatar)
       .then((res) => {
-        setCurrentUser(res);
+        setCurrentUser(res.user);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
@@ -129,7 +128,8 @@ function App() {
     api
       .pushNewCard(data)
       .then((newCard) => {
-        setCards([newCard, ...cards]);
+        // console.log(cards)
+        setCards([newCard.card, ...cards]);
         closeAllPopups();
       })
       .catch((err) => console.log(err));
@@ -141,7 +141,7 @@ function App() {
       .then((data) => {
         setIsSuccess(true);
         setStatusPopupOpen(true);
-        navigate("/sign-in");
+        navigate("/signin");
       })
       .catch((error) => {
         setIsSuccess(false);
@@ -173,7 +173,7 @@ function App() {
         .checkToken(jwt)
         .then((res) => {
           if (res) {
-            setEmail(res.data.email);
+            setEmail(res.user.email);
             setLoggedIn(true);
           }
         })
@@ -213,17 +213,17 @@ function App() {
           ></Route>
 
           <Route
-            path="/sign-up"
+            path="/signup"
             element={<Register onRegister={handleRegister} />}
           ></Route>
           <Route
-            path="/sign-in"
+            path="/signin"
             element={<Login onLogin={handleLogin} />}
           ></Route>
           <Route
             path="*"
             element={
-              loggedIn ? <Navigate to="/" /> : <Navigate to="/sign-in" />
+              loggedIn ? <Navigate to="/" /> : <Navigate to="/signin" />
             }
           />
         </Routes>
