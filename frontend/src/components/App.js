@@ -40,7 +40,7 @@ function App() {
       .catch((err) => console.log(err));
     }
     
-  }, [loggedIn]);
+  }, [loggedIn, navigate]);
 
   useEffect(() => {
     checkToken();
