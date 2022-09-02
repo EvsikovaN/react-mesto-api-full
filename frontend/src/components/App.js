@@ -127,7 +127,6 @@ function App() {
     api
       .pushNewCard(data)
       .then((newCard) => {
-        // console.log(cards)
         setCards([newCard.card, ...cards]);
         closeAllPopups();
       })
