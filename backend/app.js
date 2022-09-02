@@ -19,7 +19,7 @@ const { PORT = 3001 } = process.env;
 
 const app = express();
 
-app.use(CORS());
+app.use(CORS);
 app.use(helmet());
 
 app.use(express.json());
