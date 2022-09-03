@@ -79,7 +79,7 @@ export class Api {
 
 const api = new Api({
   url: "https://api.mesto.evsikova.nomoredomains.sbs/",
-  //url: "http://localhost:3001/",
+  // url: "http://localhost:3001/",
   headers: {
     'Content-Type': 'application/json',
   },
