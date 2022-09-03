@@ -4,6 +4,8 @@ const User = require('../models/userModels');
 const { errorMessage } = require('../utils/errorsMessage');
 const { NotFoundError } = require('../errors/not-found-err');
 
+const { NODE_ENV, JWT_SECRET } = process.env;
+
 const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send(users))
@@ -81,7 +83,7 @@ const login = (req, res, next) => {
       // Пейлоуд токена — зашифрованный в строку объект пользователя
       // время, в течение которого токен остаётся действительным
       // Можно передать число, тогда метод sign сочтёт его за количество секунд:
-      const token = jwt.sign({ _id: user._id }, 'some-secret-key', { expiresIn: '7d' });
+      const token = jwt.sign({ _id: user._id }, NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key', { expiresIn: '7d' });
 
       // вернём токен
       res.send({ token });
