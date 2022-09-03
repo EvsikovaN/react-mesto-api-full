@@ -1,9 +1,10 @@
-const cors = require('cors');
+// const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
-const helmet = require('helmet');
 const { errors } = require('celebrate');
-// const { CORS } = require('./middlewares/cors');
+const helmet = require('helmet');
+const { CORS } = require('./middlewares/cors');
+
 const { validateUserData, validateAuth } = require('./utils/validation');
 const { auth } = require('./middlewares/auth');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
@@ -19,8 +20,8 @@ const { PORT = 3001 } = process.env;
 
 const app = express();
 
-app.use(cors());
-// app.use(CORS);
+// app.use(cors());
+app.use(CORS);
 app.use(helmet());
 
 app.use(express.json());
