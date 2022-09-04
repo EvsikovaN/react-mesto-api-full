@@ -1,5 +1,4 @@
 require('dotenv').config();
-// const cors = require('cors');
 const express = require('express');
 const mongoose = require('mongoose');
 const { errors } = require('celebrate');
@@ -21,7 +20,6 @@ const { PORT = 3001 } = process.env;
 
 const app = express();
 
-// app.use(cors());
 app.use(CORS);
 app.use(helmet());
 
@@ -52,14 +50,12 @@ app.use(auth);
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
 
-app.use(errorLogger); // подключаем логгер ошибок
-
-app.use(errors()); // обработчик ошибок celebrate
-
 app.use((req, res, next) => {
   next(new NotFoundError('Запрашиваемой страницы не существует'));
 });
 
+app.use(errorLogger); // подключаем логгер ошибок
+app.use(errors()); // обработчик ошибок celebrate
 app.use(handleError);
 
 async function main() {
